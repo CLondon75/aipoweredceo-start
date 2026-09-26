@@ -212,13 +212,13 @@ h1 .hl{color:var(--teal)}
     <div class="hero">
       <p class="eyebrow">Find your starting point</p>
       <h1>Start where you <span class="hl">actually</span> are.</h1>
-      <p class="lede">Six questions. About sixty seconds. I'll point you to the one next step that fits your life right now, not the one someone else says you should be on.</p>
+      <p class="lede">Six questions. About sixty seconds. I'll show you exactly where to start with Claude AI, based on your life right now, not someone else's.</p>
       <button class="btn btn-primary btn-lg" id="start">Start the quiz</button>
       <p class="fine">No email needed to see your answer.</p>
       <div class="pills">
         <span class="pill">Six questions</span>
-        <span class="pill">Five possible answers</span>
-        <span class="pill">Two of them are free</span>
+        <span class="pill">Built for mothers in a caregiving role</span>
+        <span class="pill">Three possible answers</span>
       </div>
     </div>
   </section>
@@ -272,7 +272,7 @@ h1 .hl{color:var(--teal)}
 
       <div class="foot-row">
         <button class="linky" id="retake">Take it again</button>
-        <button class="linky" id="showAll">See all five paths</button>
+        <button class="linky" id="showAll">See all three options</button>
       </div>
 
       <div id="allPaths" hidden>
@@ -295,17 +295,15 @@ var CONFIG = {
   captureEndpoint: "https://formspree.io/f/mjyblwjr",
   substack: "https://celesteangeliclondon.substack.com/subscribe",
 
-  // ---- edit these two lines each month / each cohort ----
-  freeSessionDate: "Wednesday, September 30",  // next free Introduction to Claude
-  cohortSeats: "Eight",                        // must match celesteangeliclondon.com/workshop
+  // ---- Premium price. The line switches itself on November 1, 2026 ----
+  premiumEarly: "$27 a month, locked for life, if you join by October 31. On November 1 it goes to $47.",
+  premiumLater: "$47 a month, when you're ready for the full library.",
+  priceChange: "2026-11-01T00:00:00-04:00",
 
   links: {
-    skool:     "https://www.skool.com/ai-powered-ceo-6976",
-    workshop:  "https://celesteangeliclondon.com/free-workshop",
-    blueprint: "https://buy.stripe.com/8x27sKdeMdEo6SF5zs5kk02",
-    cohortPage:"https://celesteangeliclondon.com/workshop",
-    cohortBuy: "https://buy.stripe.com/dRm8wO1w457S6SF4vo5kk01",
-    coaching:  "https://calendar.app.google/Hg2ydNTm2kEmoNjk7"
+    skool:    "https://www.skool.com/ai-powered-ceo-6976",
+    premium:  "https://www.skool.com/ai-powered-ceo-6976/about",
+    substack: "https://celesteangeliclondon.substack.com/subscribe"
   }
 };
 
@@ -319,60 +317,60 @@ var Q = [
   t:"Where are you with AI right now?",
   h:"Be honest. There's no wrong answer here.",
   o:[
-    {l:"I've never opened Claude or ChatGPT.", s:{workshop:5,skool:1}, tell:"You haven't opened it yet"},
-    {l:"I've opened it, typed something, closed it again.", s:{workshop:4,skool:1,cohort:1}, tell:"You've opened it and closed it again"},
-    {l:"I use it a bit, but I'm winging it.", s:{skool:2,cohort:2,blueprint:2}, tell:"You're using it, but winging it"},
-    {l:"I use it most days and want real systems.", s:{coaching:3,cohort:2}, tell:"You already use it most days"}
+    {l:"I've never opened Claude or ChatGPT.", s:{skool:3,substack:1}, tell:"You haven't opened it yet"},
+    {l:"I've opened it, typed something, closed it again.", s:{skool:3,substack:1}, tell:"You've opened it and closed it again"},
+    {l:"I use it a bit, but I'm winging it.", s:{skool:1,premium:2}, tell:"You're using it, but winging it"},
+    {l:"I use it most days and want real systems.", s:{premium:3}, tell:"You already use it most days"}
   ]
 },
 {
-  t:"What does your business look like today?",
-  h:"Where it is now, not where you want it.",
+  t:"What does your caregiving life look like right now?",
+  h:"Pick the one that's closest.",
   o:[
-    {l:"It's still an idea. Nothing is built yet.", s:{skool:2,blueprint:2,workshop:1}, tell:"the business is still an idea"},
-    {l:"It's running, but the money is up and down.", s:{blueprint:3,cohort:2,skool:1}, tell:"income is up and down"},
-    {l:"I have steady clients and I'm the bottleneck.", s:{coaching:3,cohort:2}, tell:"you're the bottleneck in your own business"},
-    {l:"I'm a VA or freelancer doing the work for other people.", s:{cohort:2,skool:2,coaching:1}, tell:"you're doing the work for other people"}
+    {l:"Young kids at home, and my hours come in pieces.", s:{skool:1,premium:1}, tell:"your hours come in pieces"},
+    {l:"School-age kids, activities and a lot of driving.", s:{skool:1,premium:1}, tell:"you're always driving somewhere"},
+    {l:"Kids and my parents. I'm caring in both directions.", s:{premium:2}, tell:"you're caring in both directions"},
+    {l:"Someone who needs a lot of care, most days.", s:{skool:2}, tell:"someone needs a lot of care most days"}
   ]
 },
 {
   t:"What's actually in the way?",
   h:"Pick the one that stings a little.",
   o:[
-    {l:"I don't know where to start.", s:{workshop:4,skool:1}, tell:"you don't know where to start"},
-    {l:"I know what to do. I just never finish it.", s:{blueprint:3,cohort:2}, tell:"you know what to do but never finish it"},
-    {l:"I'm doing all of this alone and it's quiet.", s:{skool:5}, tell:"you're doing this alone"},
-    {l:"I need it built around MY business, not a general course.", s:{coaching:4}, tell:"you need it built around your business"}
+    {l:"I don't know where to start.", s:{skool:3}, tell:"you don't know where to start"},
+    {l:"I know what to do. I just never finish it.", s:{premium:3}, tell:"you know what to do but never finish it"},
+    {l:"I'm doing all of this alone and it's quiet.", s:{skool:4}, tell:"you're doing this alone"},
+    {l:"I need prompts built for my real day, not general tips.", s:{premium:4}, tell:"you want prompts built for your real day"}
   ]
 },
 {
   t:"How do you actually learn best?",
   h:"Think about the last thing you finished.",
   o:[
-    {l:"Reading and working through it on my own.", s:{blueprint:4}, tell:"you learn on your own"},
-    {l:"Being taught live, from the very beginning.", s:{workshop:4,cohort:2}, tell:"you want to be taught live"},
-    {l:"In a room with other women doing the same thing.", s:{skool:4,cohort:2}, tell:"you learn best around other women"},
-    {l:"One to one, with someone who knows my business.", s:{coaching:4}, tell:"you want one to one"}
+    {l:"Reading on my own, when I get a quiet minute.", s:{substack:5}, tell:"you learn by reading on your own"},
+    {l:"Step by step, from the very beginning.", s:{skool:3}, tell:"you like to start from the very beginning"},
+    {l:"Around other women doing the same thing.", s:{skool:3,premium:1}, tell:"you learn best around other women"},
+    {l:"Copy, paste, done. Just give me what works.", s:{premium:4}, tell:"you want copy-paste prompts that work"}
   ]
 },
 {
   t:"What can you put toward this right now?",
-  h:"This decides what I show you. Nothing gets unlocked by picking a bigger number.",
+  h:"There's no wrong answer. Two of the three are free.",
   o:[
-    {l:"Nothing. Money is tight right now.", s:{workshop:4,skool:3}, gate:["workshop","skool"], tell:"money is tight right now"},
-    {l:"Under $100.", s:{blueprint:4,skool:2,workshop:2}, gate:["workshop","skool","blueprint"], tell:"you have a little to work with"},
-    {l:"A few hundred, up to about a thousand.", s:{cohort:4,blueprint:1}, gate:["workshop","skool","blueprint","cohort"], tell:"you can invest a few hundred"},
-    {l:"I'll invest properly if it's the right fit.", s:{coaching:4,cohort:3}, gate:["workshop","skool","blueprint","cohort","coaching"], tell:"you're ready to invest properly"}
+    {l:"Nothing. Money is tight right now.", s:{skool:3,substack:1}, tight:true, tell:"money is tight right now"},
+    {l:"A little, if it's really worth it.", s:{skool:1,premium:1}, tell:"you have a little to work with"},
+    {l:"About $27 a month is fine.", s:{premium:4}, tell:"$27 a month works for you"},
+    {l:"I'll invest if it's the right fit.", s:{premium:3}, tell:"you'll invest if it's the right fit"}
   ]
 },
 {
   t:"How much time do you really have in a week?",
-  h:"After school runs, clients, dinner, all of it.",
+  h:"After school runs, appointments, dinner, all of it.",
   o:[
-    {l:"An hour. Maybe.", s:{skool:2,blueprint:2,workshop:2,cohort:-2,coaching:-2}, tell:"you have about an hour a week"},
-    {l:"Two or three hours.", s:{skool:2,cohort:1,blueprint:1}, tell:"you have a few hours a week"},
-    {l:"Half a day.", s:{cohort:2,coaching:1}, tell:"you have half a day"},
-    {l:"I'll make the time. This matters.", s:{coaching:2,cohort:2}, tell:"you'll make the time"}
+    {l:"Ten minutes here and there.", s:{substack:3,skool:1}, tell:"you have ten minutes here and there"},
+    {l:"An hour, maybe.", s:{skool:2,premium:1}, tell:"you have about an hour a week"},
+    {l:"A few hours.", s:{premium:2,skool:1}, tell:"you have a few hours a week"},
+    {l:"I'll make the time. This matters.", s:{premium:3}, tell:"you'll make the time"}
   ]
 }
 ];
@@ -383,117 +381,70 @@ var Q = [
 var R = {
 skool:{
   tag:"Your next step",
-  title:"Start in the room. It's free.",
-  sub:"You don't need to buy anything. You need people around you and a first week that's already mapped out.",
+  title:"Start in my free Skool.",
+  sub:"You don't need to buy anything yet. You need a first step that fits between everything else you do, and women around you who get it.",
   strip:"#1FAE9C",
   price:'<span class="free">Free</span>',
   whatLabel:"What's waiting inside",
   list:[
-    "The Claude for Single Moms workbook. 15 pages, your first week with Claude, 20 minutes a day.",
-    "New to Claude AI, a 5 lesson beginner course. Start at lesson one, What Claude Actually Is.",
-    "Mondays 2pm ET, AI Powered Book Club.",
-    "Tuesdays 1pm ET, Co-Working Task Tuesday. You bring the task, we work it together.",
-    "Wednesdays 6pm ET, Her Circle. Free networking, 90 minutes.",
-    "Instant join. No approval, no questions, no card."
+    "New to Claude AI. A short beginner course. Start at lesson one.",
+    "The Claude AI Guide for Beginners.",
+    "The Caregiving CEO Hook Playbook.",
+    "A community of mothers building a life and a business inside a caregiving role.",
+    "Instant join. No approval, no card."
   ],
   ctas:[
-    {l:"Join the community, free", u:"skool", k:"primary"},
-    {l:"Also save my seat for the free live session", u:"workshop", k:"ghost"}
+    {l:"Join my free Skool", u:"skool", k:"primary"},
+    {l:"Not ready? Get my free Substack instead", u:"substack", k:"ghost"}
   ],
-  note:"Open the Classroom tab first and start with New to Claude AI. Then hit Going on the Calendar for whichever room fits your week."
+  note:"Once you're in, open the Classroom tab and start with New to Claude AI."
 },
-workshop:{
+premium:{
   tag:"Your next step",
-  title:"Be taught it live, from the very beginning.",
-  sub:"Reading about Claude hasn't worked. Watching someone do it, live, with a real task, does.",
-  strip:"#C9B8E4",
-  price:'<span class="free">Free</span> <span class="qual">and live</span>',
-  whatLabel:"Introduction to Claude",
-  list:[
-    "{{DATE}}, 2026. Live and online, 10:00 to 11:00 AM ET.",
-    "One hour, live, from the very beginning.",
-    "You'll see what Claude is, how to talk to it, and how to use it on something real in your business.",
-    "Come with one task you're tired of. Leave without it.",
-    "If this date doesn't work, it runs again next month."
-  ],
-  ctas:[
-    {l:"Save my seat", u:"workshop", k:"primary"},
-    {l:"Join the free community while I wait", u:"skool", k:"ghost"}
-  ],
-  note:"Registration also puts you on my list, which is how the joining link reaches you."
-},
-blueprint:{
-  tag:"Your next step",
-  title:"You don't need another course. You need the plan.",
-  sub:"You already know what to do. What you're missing is the whole thing written down in order, with space to fill in your own numbers.",
+  title:"You're ready for Premium.",
+  sub:"You want Claude prompts built for a caregiving mother's real day, ready to copy and paste. That's exactly what Premium is.",
   strip:"#2C1654",
-  price:'$47 <span class="qual">one time</span>',
-  whatLabel:"The Freedom Exit Blueprint",
+  price:'$27 <span class="qual">a month, locked for life</span>',
+  whatLabel:"What you get in Premium",
   list:[
-    "411 pages. Ten chapters. A workbook, not a book you read once.",
-    "Define Freedom First, The CEO Audit, The CEO Shift.",
-    "The CEO Revenue Engine. Your income goal, your freedom number, your offer, your 90 day plan.",
-    "The Debt Freedom Strategy and The Emergency Fund Builder.",
-    "CEO Systems, including your AI org chart and your first Claude workflow.",
-    "The Snowbird CEO, Freedom Legacy, and Continue Your CEO Journey.",
-    "40 Claude prompts in the back. Instant PDF download."
+    "Everything in the free Skool.",
+    "The Caregiving CEO Library. Copy-paste Claude prompts, each with when to use it.",
+    "Her Circle, every Wednesday.",
+    "The CEO Toolkit and The Freedom Exit Blueprint.",
+    "New shelves added as I build them."
   ],
   ctas:[
-    {l:"Get the Blueprint, $47", u:"blueprint", k:"plum"},
-    {l:"Join the free community first", u:"skool", k:"ghost"}
+    {l:"Join Premium, $27 a month", u:"premium", k:"plum"},
+    {l:"Start with the free Skool instead", u:"skool", k:"ghost"},
+    {l:"Not ready? Get my free Substack", u:"substack", k:"ghost"}
   ],
-  note:"Instant PDF download. The file is yours the moment you pay, and you keep it."
+  note:""
 },
-cohort:{
+substack:{
   tag:"Your next step",
-  title:"Three live sessions. {{SEATS}} seats.",
-  sub:"You're past needing an intro. You need a room, a schedule, and someone watching whether you actually build it.",
-  strip:"#1FAE9C",
-  price:'$797 <span class="qual">CAD</span> <span class="was">$997</span>',
-  whatLabel:"AI Powered CEO Workshop, founding cohort",
-  list:[
-    "Three live sessions. October 3, 4 and 10, 2026, 9am to 12pm ET.",
-    "First 90 minutes I teach. Second 90 minutes is optional work time, live, with help.",
-    "Weekend One, The Foundation. What Claude is, the art of prompting, and a week of your own content.",
-    "{{SEATS}} seats. Your rate is locked for life at $797.",
-    "The Systems and The CEO Era follow in the new year. Founding members get first refusal.",
-    "The exchange: one honest testimonial at the end."
-  ],
-  ctas:[
-    {l:"See the full cohort page", u:"cohortPage", k:"plum"},
-    {l:"Come to the free session first", u:"workshop", k:"ghost"}
-  ],
-  note:"Price goes back to $997 after this cohort. If you'd rather see how I teach before you decide, the {{DATE}} session is free."
-},
-coaching:{
-  tag:"Your next step",
-  title:"Built around your business. Not a general course.",
-  sub:"You're already running. What you need is someone inside your actual business, building the systems with you.",
+  title:"Start with my Substack. It's free.",
+  sub:"You learn best reading on your own, in the quiet minutes. My Substack brings one useful Claude idea for caregiving mothers straight to your inbox.",
   strip:"#C9B8E4",
-  price:'$1,999 <span class="qual">over 6 months</span>',
-  whatLabel:"One to one coaching",
+  price:'<span class="free">Free</span>',
+  whatLabel:"What you'll get",
   list:[
-    "12 sessions, 2 hours each, every other week, across 6 months.",
-    "Custom branded AI workflows built for your offer and your voice.",
-    "Automated lead tracking so nothing warm goes cold.",
-    "Emails and DMs drafted in your voice, not a template voice.",
-    "We build the foundation first. Build the house properly and it runs.",
-    "Application based. We talk first and make sure it fits."
+    "Practical Claude AI ideas for mothers in a caregiving role.",
+    "Short enough to read in the car line.",
+    "My weekly article, plus notes during the week.",
+    "Unsubscribe any time."
   ],
   ctas:[
-    {l:"Book a call with me", u:"coaching", k:"plum"},
-    {l:"See the group cohort instead", u:"cohortPage", k:"ghost"}
+    {l:"Subscribe to my Substack", u:"substack", k:"primary"},
+    {l:"Or join my free Skool community", u:"skool", k:"ghost"}
   ],
-  note:"The call is 30 minutes. If the group cohort is the better fit for you, I'll say so."
+  note:"When you want more than reading, the free Skool is one click away."
 }
 };
 
 var ALL = [
-  {k:"skool",     b:"The free community",        s:"Free. Weekly rooms, the beginner course, the free workbook.", u:"skool"},
-  {k:"workshop",  b:"Introduction to Claude",    s:"Free live session, {{DATE}}, 10 to 11am ET.",      u:"workshop"},
-  {k:"blueprint", b:"The Freedom Exit Blueprint",s:"$47. 411 pages, ten chapters, workbook format.",              u:"blueprint"},
-  {k:"cohort",    b:"The founding cohort",       s:"$797 CAD. Three live sessions, Oct 3, 4 and 10. {{SEATS}} seats.",    u:"cohortPage"},
-  {k:"coaching",  b:"One to one coaching",       s:"$1,999. 12 sessions over 6 months, built around you.",        u:"coaching"}
+  {k:"skool",    b:"The free Skool community", s:"Free. Beginner course, guide, Hook Playbook, and other mothers.", u:"skool"},
+  {k:"premium",  b:"Premium",                  s:"The full Caregiving CEO Library, Her Circle and more.", u:"premium"},
+  {k:"substack", b:"My Substack",              s:"Free. Claude ideas for caregiving mothers, in your inbox.", u:"substack"}
 ];
 
 /* =====================================================================
@@ -527,43 +478,42 @@ function render(){
 }
 
 function score(){
-  var s = {skool:0, workshop:0, blueprint:0, cohort:0, coaching:0};
-  var gate = ["workshop","skool","blueprint","cohort","coaching"];
-
+  var s = {skool:0, premium:0, substack:0};
+  var tight = false;
   picks.forEach(function(n, qi){
     var opt = Q[qi].o[n];
-    if (opt.gate) gate = opt.gate;
+    if (opt.tight) tight = true;
     for (var k in opt.s) if (s.hasOwnProperty(k)) s[k] += opt.s[k];
   });
-
+  var keys = tight ? ["skool","substack"] : ["skool","premium","substack"];
   var best = null, bestVal = -999;
-  gate.forEach(function(k){
-    if (s[k] > bestVal) { bestVal = s[k]; best = k; }
-  });
-  return {key: best, scores: s, gate: gate};
+  keys.forEach(function(k){ if (s[k] > bestVal) { bestVal = s[k]; best = k; } });
+  return {key: best, scores: s, tight: tight};
+}
+
+function premiumLine(){
+  var early = new Date() < new Date(CONFIG.priceChange);
+  return early ? "Premium is " + CONFIG.premiumEarly : "Premium is " + CONFIG.premiumLater;
 }
 
 function whyLine(){
   var t = picks.map(function(n, qi){ return Q[qi].o[n].tell; });
-  return "You said " + t[2] + ", " + t[3] + ", and " + t[4] + ". That's why this one and not the others.";
+  return "You said " + t[2] + ", " + t[3] + ", and " + t[5] + ". That's why I'd start you here.";
 }
 
 function finish(){
   $("fill").style.width = "100%";
   var out = score();
-  paint(out.key);
+  paint(out.key, out.tight);
   show("result");
   if (window.history && history.replaceState) {
     history.replaceState(null, "", "#" + out.key);
   }
 }
 
-function fill(str){
-  return str.replace("{{DATE}}", CONFIG.freeSessionDate)
-            .replace("{{SEATS}}", CONFIG.cohortSeats);
-}
+function fill(str){ return str; }
 
-function paint(key){
+function paint(key, tight){
   var r = R[key];
   document.querySelector(".res-strip").style.background = r.strip;
   $("rTag").textContent = r.tag;
@@ -593,7 +543,11 @@ function paint(key){
     c.appendChild(a);
   });
 
-  $("rNote").textContent = fill(r.note);
+  var note = fill(r.note);
+  if (key === "premium") note = premiumLine();
+  else if (key === "skool" && !tight) note += " When you're ready for more, " + premiumLine().charAt(0).toLowerCase() + premiumLine().slice(1);
+  $("rNote").textContent = note;
+  if (key === "premium" && new Date() >= new Date(CONFIG.priceChange)) $("rPrice").innerHTML = '$47 <span class="qual">a month</span>';
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({event:"quiz_result", result:key});
 }
@@ -616,7 +570,7 @@ $("retake").onclick= function(){ i = 0; picks = []; render(); show("quiz"); };
 $("showAll").onclick = function(){
   var a = $("allPaths");
   a.hidden = !a.hidden;
-  $("showAll").textContent = a.hidden ? "See all five paths" : "Hide the other paths";
+  $("showAll").textContent = a.hidden ? "See all three options" : "Hide the other options";
 };
 
 $("capForm").onsubmit = function(e){
@@ -654,10 +608,10 @@ $("capForm").onsubmit = function(e){
 
 buildPaths();
 
-/* deep link: /fit#cohort opens straight to that result */
+/* deep link: #skool #premium #substack opens straight to that result */
 (function(){
   var h = (location.hash || "").replace("#","");
-  if (R[h]) { picks = []; paint(h); show("result"); }
+  if (R[h]) { picks = []; paint(h, false); show("result"); }
 })();
 </script>
 </body>
