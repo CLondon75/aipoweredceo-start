@@ -262,7 +262,7 @@ h1 .hl{color:var(--teal)}
 
       <div class="capture">
         <h4>Want this sent to your inbox?</h4>
-        <p>I'll email you your result plus my free 5 Claude Prompts that save 5+ hours a week.</p>
+        <p>I'll email you your result plus my free 11 Minutes in the Pickup Line PDF.</p>
         <form id="capForm">
           <input type="email" id="capEmail" placeholder="Your email" required aria-label="Your email">
           <button class="btn btn-primary" type="submit">Send it</button>
@@ -549,7 +549,7 @@ function paint(key, tight){
 
   var note = fill(r.note);
   if (key === "premium") note = premiumLine();
-  else if (key === "skool" && !tight) note += " When you're ready for more, " + premiumLine().charAt(0).toLowerCase() + premiumLine().slice(1);
+  else if (key === "skool" && !tight) note += " When you're ready for more, " + premiumLine();
   $("rNote").textContent = note;
   if (key === "premium" && new Date() >= new Date(CONFIG.priceChange)) $("rPrice").innerHTML = '$47 <span class="qual">a month</span>';
   window.dataLayer = window.dataLayer || [];
