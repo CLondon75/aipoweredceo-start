@@ -218,7 +218,7 @@ h1 .hl{color:var(--teal)}
       <div class="pills">
         <span class="pill">Six questions</span>
         <span class="pill">Built for mothers in a caregiving role</span>
-        <span class="pill">Three possible answers</span>
+        <span class="pill">Two possible answers</span>
       </div>
     </div>
   </section>
@@ -272,7 +272,7 @@ h1 .hl{color:var(--teal)}
 
       <div class="foot-row">
         <button class="linky" id="retake">Take it again</button>
-        <button class="linky" id="showAll">See all three options</button>
+        <button class="linky" id="showAll">See both options</button>
       </div>
 
       <div id="allPaths" hidden>
@@ -295,14 +295,12 @@ var CONFIG = {
   captureEndpoint: "https://formspree.io/f/mjyblwjr",
   substack: "https://celesteangeliclondon.substack.com/subscribe",
 
-  // ---- Premium price. The line switches itself on November 1, 2026 ----
-  premiumEarly: "$27 a month, locked for life, if you join by October 31. On November 1 it goes to $47.",
-  premiumLater: "$47 a month, when you're ready for the full library.",
-  priceChange: "2026-11-01T00:00:00-04:00",
+  // ---- Skool price, as set in Skool > Settings > Pricing (Oct 19 2026) ----
+  skoolPrice: "$27",
+  trialDays: 7,
 
   links: {
-    skool:    "https://www.skool.com/ai-powered-ceo-6976",
-    premium:  "https://www.skool.com/ai-powered-ceo-6976/about",
+    skool:    "https://www.skool.com/ai-powered-ceo-6976/about",
     substack: "https://celesteangeliclondon.substack.com/subscribe"
   }
 };
@@ -355,7 +353,7 @@ var Q = [
 },
 {
   t:"What can you put toward this right now?",
-  h:"There's no wrong answer. Two of the three are free.",
+  h:"There's no wrong answer. One path is free, the other starts with a free week.",
   o:[
     {l:"Nothing. Money is tight right now.", s:{skool:3,substack:1}, tight:true, tell:"money is tight right now"},
     {l:"A little, if it's really worth it.", s:{skool:1,premium:1}, tell:"you have a little to work with"},
@@ -381,47 +379,27 @@ var Q = [
 var R = {
 skool:{
   tag:"Your next step",
-  title:"Start in my free Skool.",
-  sub:"You don't need to buy anything yet. You need a first step that fits between everything else you do, and women around you who get it.",
+  title:"Start your free week in my Skool.",
+  sub:"You don't have to figure Claude out alone. Try the room free for 7 days. If it fits, stay for $27 a month. If it doesn't, cancel in your first week and you pay nothing.",
   strip:"#1FAE9C",
-  price:'<span class="free">Free</span>',
+  price:'<span class="free">7 days free</span> <span class="qual">then $27 a month</span>',
   whatLabel:"What's waiting inside",
   list:[
-    "11 Minutes in the Pickup Line. A free PDF with 11 copy-paste Claude prompts.",
-    "The Foundation: Claude for Caregiving Mothers. A free 10-lesson course, about 2 minutes a lesson.",
-    "The 11-Minute Calendar. One small Claude task a day. Your first week is free.",
-    "A community of mothers building a life and a business inside a caregiving life.",
-    "Free to join. No card needed."
-  ],
-  ctas:[
-    {l:"Join my free Skool", u:"skool", k:"primary"},
-    {l:"Not ready? Get my free Substack instead", u:"substack", k:"ghost"}
-  ],
-  note:"Once you're in, grab your free PDF, then open the Classroom tab and start with The Foundation."
-},
-premium:{
-  tag:"Your next step",
-  title:"You're ready for Premium.",
-  sub:"You want Claude prompts built for a caregiving mother's real day, ready to copy and paste. That's exactly what Premium is.",
-  strip:"#2C1654",
-  price:'$27 <span class="qual">a month, locked for life</span>',
-  whatLabel:"What you get in Premium",
-  list:[
-    "Everything in the free Skool.",
+    "The Foundation: Claude for Caregiving Mothers. 10 short lessons, about 2 minutes each.",
+    "11 Minutes in the Pickup Line. 11 copy-paste Claude prompts.",
+    "The 11-Minute Calendar. One small Claude task a day.",
     "Everything I Carry. Claude prompt bundles for the roles you carry every day.",
     "Nourish the One Who Carries. Caregiver voices and holistic nourishment for you.",
-    "The Caregiving CEO Library. Copy-paste Claude prompts, each with when to use it.",
-    "The full 11-Minute Calendar, every week after the first.",
+    "The Caregiving CEO Library. Copy-paste prompts, each with when to use it.",
     "Her Circle, every Wednesday.",
     "The CEO Toolkit, The Freedom Exit Blueprint and the Hook Playbook.",
-    "New shelves added as I build them."
+    "A small room of caregiving moms who show up for each other."
   ],
   ctas:[
-    {l:"Join Premium", u:"premium", k:"plum"},
-    {l:"Start with the free Skool instead", u:"skool", k:"ghost"},
-    {l:"Not ready? Get my free Substack", u:"substack", k:"ghost"}
+    {l:"Start my free week", u:"skool", k:"primary"},
+    {l:"Not ready? Get my free Substack instead", u:"substack", k:"ghost"}
   ],
-  note:""
+  note:"Once you're in, open the Classroom tab and start with The Foundation."
 },
 substack:{
   tag:"Your next step",
@@ -439,16 +417,15 @@ substack:{
   ],
   ctas:[
     {l:"Subscribe to my Substack", u:"substack", k:"primary"},
-    {l:"Or join my free Skool community", u:"skool", k:"ghost"}
+    {l:"Or try my Skool free for 7 days", u:"skool", k:"ghost"}
   ],
-  note:"When you want more than reading, the free Skool is one click away."
+  note:"When you're ready for more than reading, my Skool starts with a free week."
 }
 };
 
 var ALL = [
-  {k:"skool",    b:"The free Skool community", s:"Free. The 11 Minutes in the Pickup Line PDF, The Foundation course, and your first week of the 11-Minute Calendar.", u:"skool"},
-  {k:"premium",  b:"Premium",                  s:"Everything I Carry, Nourish the One Who Carries, the full library, Her Circle and more.", u:"premium"},
-  {k:"substack", b:"My Substack",              s:"Free. Weekly Claude AI lessons and my new podcast.", u:"substack"}
+  {k:"skool",    b:"My Skool community", s:"7 days free, then $27 a month. The Foundation course, the full Claude library, Her Circle and a room of caregiving moms.", u:"skool"},
+  {k:"substack", b:"My Substack",        s:"Free. Weekly Claude AI lessons and my new podcast.", u:"substack"}
 ];
 
 /* =====================================================================
@@ -489,15 +466,11 @@ function score(){
     if (opt.tight) tight = true;
     for (var k in opt.s) if (s.hasOwnProperty(k)) s[k] += opt.s[k];
   });
-  var keys = tight ? ["skool","substack"] : ["skool","premium","substack"];
-  var best = null, bestVal = -999;
-  keys.forEach(function(k){ if (s[k] > bestVal) { bestVal = s[k]; best = k; } });
+  s.skool += s.premium; delete s.premium;
+  /* Substack if money is tight, or if she learns by reading on her own AND only has
+     ten minutes here and there (substack points 8+). Everyone else: the Skool free week. */
+  var best = (tight || s.substack >= 8) ? "substack" : "skool";
   return {key: best, scores: s, tight: tight};
-}
-
-function premiumLine(){
-  var early = new Date() < new Date(CONFIG.priceChange);
-  return early ? "Premium is " + CONFIG.premiumEarly : "Premium is " + CONFIG.premiumLater;
 }
 
 function whyLine(){
@@ -547,11 +520,7 @@ function paint(key, tight){
     c.appendChild(a);
   });
 
-  var note = fill(r.note);
-  if (key === "premium") note = premiumLine();
-  else if (key === "skool" && !tight) note += " When you're ready for more, " + premiumLine();
-  $("rNote").textContent = note;
-  if (key === "premium" && new Date() >= new Date(CONFIG.priceChange)) $("rPrice").innerHTML = '$47 <span class="qual">a month</span>';
+  $("rNote").textContent = fill(r.note);
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({event:"quiz_result", result:key});
 }
@@ -574,7 +543,7 @@ $("retake").onclick= function(){ i = 0; picks = []; render(); show("quiz"); };
 $("showAll").onclick = function(){
   var a = $("allPaths");
   a.hidden = !a.hidden;
-  $("showAll").textContent = a.hidden ? "See all three options" : "Hide the other options";
+  $("showAll").textContent = a.hidden ? "See both options" : "Hide the other option";
 };
 
 $("capForm").onsubmit = function(e){
@@ -612,9 +581,10 @@ $("capForm").onsubmit = function(e){
 
 buildPaths();
 
-/* deep link: #skool #premium #substack opens straight to that result */
+/* deep link: #skool #substack opens straight to that result (#premium is an old link, now #skool) */
 (function(){
   var h = (location.hash || "").replace("#","");
+  if (h === "premium") h = "skool";
   if (R[h]) { picks = []; paint(h, false); show("result"); }
 })();
 </script>
