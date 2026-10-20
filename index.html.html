@@ -299,11 +299,27 @@ var CONFIG = {
   skoolPrice: "$27",
   trialDays: 7,
 
+  // ---- Launch switches (Toronto time). Before these moments the offer is
+  //      hidden: nobody is routed to it, it isn't listed, its deep link
+  //      falls back to the Skool free week. ----
+  vipOpens:     "2026-10-26T00:00:00-04:00",
+  premiumOpens: "2026-11-02T00:00:00-05:00",
+
   links: {
     skool:    "https://www.skool.com/ai-powered-ceo-6976/about",
+    premium:  "https://www.skool.com/ai-powered-ceo-6976/about",
+    coffee:   "https://calendar.app.google/fDoJDZ1G8bkRtwzk7",
     substack: "https://celesteangeliclondon.substack.com/subscribe"
   }
 };
+
+function isOpen(key){
+  var now = new Date();
+  if (/[?&]preview=1/.test(location.search)) return true;
+  if (key === "vip")     return now >= new Date(CONFIG.vipOpens);
+  if (key === "premium") return now >= new Date(CONFIG.premiumOpens);
+  return true;
+}
 
 /* =====================================================================
    QUESTIONS
@@ -318,7 +334,7 @@ var Q = [
     {l:"I've never opened Claude or ChatGPT.", s:{skool:3,substack:1}, tell:"You haven't opened it yet"},
     {l:"I've opened it, typed something, closed it again.", s:{skool:3,substack:1}, tell:"You've opened it and closed it again"},
     {l:"I use it a bit, but I'm winging it.", s:{skool:1,premium:2}, tell:"You're using it, but winging it"},
-    {l:"I use it most days and want real systems.", s:{premium:3}, tell:"You already use it most days"}
+    {l:"I use it most days and want real systems.", s:{premium:2,vip:2}, tell:"You already use it most days"}
   ]
 },
 {
@@ -336,9 +352,9 @@ var Q = [
   h:"Pick the one that stings a little.",
   o:[
     {l:"I don't know where to start.", s:{skool:3}, tell:"you don't know where to start"},
-    {l:"I know what to do. I just never finish it.", s:{premium:3}, tell:"you know what to do but never finish it"},
+    {l:"I know what to do. I just never finish it.", s:{premium:3,vip:2}, tell:"you know what to do but never finish it"},
     {l:"I'm doing all of this alone and it's quiet.", s:{skool:4}, tell:"you're doing this alone"},
-    {l:"I need prompts built for my real day, not general tips.", s:{premium:4}, tell:"you want prompts built for your real day"}
+    {l:"I need Claude set up for my real week, not general tips.", s:{premium:2,vip:4}, tell:"you want Claude set up for your real week"}
   ]
 },
 {
@@ -348,17 +364,17 @@ var Q = [
     {l:"Reading on my own, when I get a quiet minute.", s:{substack:5}, tell:"you learn by reading on your own"},
     {l:"Step by step, from the very beginning.", s:{skool:3}, tell:"you like to start from the very beginning"},
     {l:"Around other women doing the same thing.", s:{skool:3,premium:1}, tell:"you learn best around other women"},
-    {l:"Copy, paste, done. Just give me what works.", s:{premium:4}, tell:"you want copy-paste prompts that work"}
+    {l:"Someone beside me, building it with me.", s:{premium:2,vip:4}, tell:"you want someone building it with you"}
   ]
 },
 {
   t:"What can you put toward this right now?",
-  h:"There's no wrong answer. One path is free, the other starts with a free week.",
+  h:"There's no wrong answer. There's a free path and a path for every stage.",
   o:[
-    {l:"Nothing. Money is tight right now.", s:{skool:3,substack:1}, tight:true, tell:"money is tight right now"},
-    {l:"A little, if it's really worth it.", s:{skool:1,premium:1}, tell:"you have a little to work with"},
-    {l:"About $27 a month is fine.", s:{premium:4}, tell:"$27 a month works for you"},
-    {l:"I'll invest if it's the right fit.", s:{premium:3}, tell:"you'll invest if it's the right fit"}
+    {l:"Nothing. Money is tight right now.", s:{skool:3,substack:1}, tight:true, cap:"substack", tell:"money is tight right now"},
+    {l:"About $27 a month is fine.", s:{skool:4}, cap:"skool", tell:"$27 a month works for you"},
+    {l:"Around $100 a month for more hands-on help.", s:{premium:5}, cap:"premium", tell:"you want more hands-on help"},
+    {l:"I'm serious about growing toward six figures, and I'll invest in the right help.", s:{vip:6,premium:2}, cap:"vip", tell:"you're serious about growing toward six figures"}
   ]
 },
 {
@@ -368,7 +384,7 @@ var Q = [
     {l:"Ten minutes here and there.", s:{substack:3,skool:1}, tell:"you have ten minutes here and there"},
     {l:"An hour, maybe.", s:{skool:2,premium:1}, tell:"you have about an hour a week"},
     {l:"A few hours.", s:{premium:2,skool:1}, tell:"you have a few hours a week"},
-    {l:"I'll make the time. This matters.", s:{premium:3}, tell:"you'll make the time"}
+    {l:"I'll make the time. This matters.", s:{premium:2,vip:3}, tell:"you'll make the time"}
   ]
 }
 ];
@@ -420,13 +436,58 @@ substack:{
     {l:"Or try my Skool free for 7 days", u:"skool", k:"ghost"}
   ],
   note:"When you're ready for more than reading, my Skool starts with a free week."
+},
+premium:{
+  tag:"Your next step",
+  title:"Join Premium. Build it with me every month.",
+  sub:"You're past the basics and you want more hands-on help, without going it alone. Premium sits inside my Skool, with a small group and more of my time.",
+  strip:"#2C1654",
+  price:'$97 <span class="qual">a month &#183; 8 seats</span>',
+  whatLabel:"What you get",
+  list:[
+    "Everything in the $27 membership.",
+    "A monthly Build It With Me call, in a small group of 8 women.",
+    "Send Me Your Prompt. Monthly recorded reviews of your real prompts.",
+    "Your Claude project set up with you in your first month.",
+    "A 30-minute 1:1 with me every quarter.",
+    "A private Premium room."
+  ],
+  ctas:[
+    {l:"Join Premium", u:"premium", k:"primary"},
+    {l:"Start with the $27 free week instead", u:"skool", k:"ghost"}
+  ],
+  note:"Only 8 seats, so every woman gets real time with me."
+},
+vip:{
+  tag:"1:1 VIP",
+  title:"The 30-Day Claude Build.",
+  sub:"You're serious about growing toward six figures, and you want Claude set up for your real week with me beside you. In 30 days, we build it together.",
+  strip:"#15605C",
+  price:'$1,999 USD <span class="qual">or 2 payments of $1,050</span>',
+  whatLabel:"What we do together",
+  list:[
+    "Session 1 (2 hours): we map your week, your busywork, and where your 11 minutes go. Then we set up your Claude project in your voice.",
+    "Sessions 2 and 3 (90 minutes each): we build your follow-ups, content and client replies together.",
+    "Session 4 (1 hour): handoff. You leave with a one-page guide to how your system runs.",
+    "Message support Monday to Friday for the full 30 days.",
+    "Only 4 spots a month."
+  ],
+  ctas:[
+    {l:"Book a free coffee chat", u:"coffee", k:"plum"},
+    {l:"Not yet? Start with the $27 free week", u:"skool", k:"ghost"}
+  ],
+  note:"The coffee chat is 30 minutes, no pitch. We talk about your business and your week, and see if it's the right fit."
 }
 };
 
-var ALL = [
+var ALL_SRC = [
+  {k:"substack", b:"My Substack",        s:"Free. Weekly Claude AI lessons and my new podcast.", u:"substack"},
   {k:"skool",    b:"My Skool community", s:"7 days free, then $27 a month. The Foundation course, the full Claude library, Her Circle and a room of caregiving moms.", u:"skool"},
-  {k:"substack", b:"My Substack",        s:"Free. Weekly Claude AI lessons and my new podcast.", u:"substack"}
+  {k:"premium",  b:"Premium",            s:"$97 a month, 8 seats. A monthly build call, prompt reviews, setup in your first month and a quarterly 1:1.", u:"premium"},
+  {k:"vip",      b:"1:1 VIP: The 30-Day Claude Build", s:"$1,999 USD. Four sessions over 30 days to set up Claude for your real week. 4 spots a month.", u:"coffee"}
 ];
+var ALL = ALL_SRC.filter(function(x){ return isOpen(x.k); });
+var ORDER = ["substack","skool","premium","vip"];
 
 /* =====================================================================
    ENGINE
@@ -459,17 +520,27 @@ function render(){
 }
 
 function score(){
-  var s = {skool:0, premium:0, substack:0};
-  var tight = false;
+  var s = {skool:0, premium:0, vip:0, substack:0};
+  var tight = false, cap = "vip";
   picks.forEach(function(n, qi){
     var opt = Q[qi].o[n];
     if (opt.tight) tight = true;
+    if (opt.cap) cap = opt.cap;
     for (var k in opt.s) if (s.hasOwnProperty(k)) s[k] += opt.s[k];
   });
-  s.skool += s.premium; delete s.premium;
   /* Substack if money is tight, or if she learns by reading on her own AND only has
-     ten minutes here and there (substack points 8+). Everyone else: the Skool free week. */
-  var best = (tight || s.substack >= 8) ? "substack" : "skool";
+     ten minutes here and there (substack points 8+). */
+  if (tight || s.substack >= 8) return {key:"substack", scores:s, tight:tight};
+
+  /* The budget answer (question 5) is a hard ceiling: nobody is shown an offer
+     above what she said she can put toward this. Within the ceiling, the paid
+     tier with the most points wins; ties go to the lower tier. Offers that
+     haven't opened yet are skipped. */
+  var allowed = ORDER.slice(ORDER.indexOf("skool"), ORDER.indexOf(cap) + 1)
+                     .filter(function(k){ return isOpen(k); });
+  if (!allowed.length) allowed = ["skool"];
+  var best = allowed[0];
+  allowed.forEach(function(k){ if (s[k] > s[best]) best = k; });
   return {key: best, scores: s, tight: tight};
 }
 
@@ -543,8 +614,15 @@ $("retake").onclick= function(){ i = 0; picks = []; render(); show("quiz"); };
 $("showAll").onclick = function(){
   var a = $("allPaths");
   a.hidden = !a.hidden;
-  $("showAll").textContent = a.hidden ? "See both options" : "Hide the other option";
+  $("showAll").textContent = a.hidden ? allLabel() : "Hide the other options";
 };
+function allLabel(){ return ALL.length === 2 ? "See both options" : "See all " + ALL.length + " options"; }
+$("showAll").textContent = allLabel();
+(function(){
+  var words = ["","One","Two","Three","Four"];
+  var pills = document.querySelectorAll(".pill");
+  pills[pills.length-1].textContent = words[ALL.length] + " possible answers";
+})();
 
 $("capForm").onsubmit = function(e){
   e.preventDefault();
@@ -581,10 +659,11 @@ $("capForm").onsubmit = function(e){
 
 buildPaths();
 
-/* deep link: #skool #substack opens straight to that result (#premium is an old link, now #skool) */
+/* deep link: #skool #substack #premium #vip opens straight to that result.
+   An offer that hasn't opened yet falls back to #skool. */
 (function(){
   var h = (location.hash || "").replace("#","");
-  if (h === "premium") h = "skool";
+  if (R[h] && !isOpen(h)) h = "skool";
   if (R[h]) { picks = []; paint(h, false); show("result"); }
 })();
 </script>
