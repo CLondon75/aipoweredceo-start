@@ -22,7 +22,7 @@
   --off:#FAFBF6;
   --white:#FFFFFF;
   --ink:#2C1654;
-  --muted:#6B6180;
+  --muted:#4A3A66;
   --line:#E7E0F0;
   --radius:16px;
   --pill:50px;
@@ -198,6 +198,18 @@ h1 .hl{color:var(--teal)}
 .fade{animation:fade .45s cubic-bezier(.16,1,.3,1) both}
 @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+/* ---------- about me (Oct 30 2026) ---------- */
+.me{width:180px;height:180px;border-radius:50%;object-fit:cover;border:5px solid var(--lav);box-shadow:var(--shadow-md);display:block;margin:0 auto 16px}
+.hello{font-size:20px;font-weight:800;color:var(--plum);margin:0 0 6px}
+.sec-label{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-deep);margin:0 0 10px}
+.sec-title{font-size:clamp(22px,3.8vw,30px);font-weight:900;line-height:1.2;color:var(--plum);margin:0 0 16px}
+.about p,.why-come p{font-size:16.5px;color:var(--plum)}
+.about .list,.why-come .list{margin:6px 0 18px}
+.seen{font-size:15px;font-weight:600;border-top:1px solid var(--line);padding-top:16px;margin:0}
+.seen b{color:var(--teal-deep);text-transform:uppercase;letter-spacing:.12em;font-size:12px;margin-right:8px}
+.next{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 0}
+.pill-strong{font-weight:800;font-size:15px;color:var(--plum);background:var(--lav-100);border:2px solid var(--lav);border-radius:var(--pill);padding:8px 18px}
 </style>
 </head>
 <body>
@@ -210,15 +222,41 @@ h1 .hl{color:var(--teal)}
   <!-- ================= INTRO ================= -->
   <section id="intro" class="fade">
     <div class="hero">
-      <p class="eyebrow">Find your starting point</p>
+      <img class="me" src="https://celesteangeliclondon.com/assets/img/circle-smile.webp" width="180" height="180" alt="Celeste Angelic London">
+      <p class="hello">Hi, I'm Celeste Angelic London.</p>
+      <p class="eyebrow">Certified Claude AI practitioner for caregiving moms</p>
       <h1>Start where you <span class="hl">actually</span> are.</h1>
       <p class="lede">Six questions. About sixty seconds. I'll show you exactly where to start with Claude AI, based on your life right now, not someone else's.</p>
-      <button class="btn btn-primary btn-lg" id="start">Start the quiz</button>
+      <button class="btn btn-primary btn-lg start-btn">Start the quiz</button>
       <p class="fine">No email needed to see your answer.</p>
-      <div class="pills">
-        <span class="pill">Six questions</span>
-        <span class="pill">Built for mothers in a caregiving role</span>
-        <span class="pill">Two possible answers</span>
+    </div>
+
+    <div class="card about">
+      <p class="sec-label">Who I am</p>
+      <h2 class="sec-title">A mom who builds her business in the minutes she actually gets.</h2>
+      <p>I'm a mother of three who raised two daughters on my own. Today I'm raising my son and building my business inside a caregiving life, just like you.</p>
+      <p>I've failed seven startups. I call them my tuition. What finally changed things was teaching Claude AI to carry the busywork, so my 11 minutes in the pickup line grow the business instead.</p>
+      <ul class="list">
+        <li><span>Certified Claude AI practitioner</span></li>
+        <li><span>Speaker and author of 13 books</span></li>
+        <li><span>Alignable Local Business Person of the Year, 2024</span></li>
+      </ul>
+      <p class="seen"><b>As seen in</b> Toronto Caribbean &#183; Rogers TV &#183; The Nikki Clarke Show &#183; CIBWE</p>
+    </div>
+
+    <div class="card why-come">
+      <p class="sec-label">Why come to my free workshop</p>
+      <h2 class="sec-title">One hour. Live. You leave with Claude working for you.</h2>
+      <ul class="list">
+        <li><span>We don't watch a demo. We set Claude up together for your business.</span></li>
+        <li><span>Everything we build fits into the small pockets of time you really get.</span></li>
+        <li><span>Brand new to AI? Perfect. We start from the very beginning.</span></li>
+        <li><span>Every mom who comes gets 15 minutes one on one with me after.</span></li>
+      </ul>
+      <div class="next"><span class="pill-strong">Free</span> <span class="pill-strong" id="nextDate"></span></div>
+      <p class="fine" style="text-align:center">A new free workshop every month.</p>
+      <div style="text-align:center;margin-top:22px">
+        <button class="btn btn-primary btn-lg start-btn">Take the quiz to find your start</button>
       </div>
     </div>
   </section>
@@ -287,7 +325,9 @@ h1 .hl{color:var(--teal)}
    ===================================================================== */
 var CONFIG = {
   captureEndpoint: "https://formspree.io/f/mjyblwjr",
-  workshopDate: "Saturday, November 21",
+  /* Add each month's free workshop here (YYYY-MM-DD). The quiz shows the
+     next one that hasn't happened yet, so a passed date drops off by itself. */
+  workshopDates: ["2026-11-21", "2026-12-12"],
   workshopTime: "9 to 10 AM ET",
   links: {
     workshop: "https://aipoweredceo-free-workshop.vercel.app/?from=quiz",
@@ -452,8 +492,18 @@ function whyLine(){
   return "You said " + t[2] + ", " + t[3] + ", and " + t[4] + ". That's why I'd start you here.";
 }
 
+function nextWorkshop(){
+  var today = new Date(); today.setHours(0,0,0,0);
+  for (var k = 0; k < CONFIG.workshopDates.length; k++) {
+    var p = CONFIG.workshopDates[k].split("-");
+    var d = new Date(+p[0], +p[1]-1, +p[2]);
+    if (d >= today) return d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+  }
+  return null;
+}
 function fill(str){
-  return str.replace("{date}", CONFIG.workshopDate).replace("{time}", CONFIG.workshopTime);
+  var d = nextWorkshop();
+  return str.replace("{date} &#183; {time}", d ? d + " &#183; " + CONFIG.workshopTime : "New date coming soon");
 }
 
 function finish(){
@@ -500,7 +550,13 @@ function paint(key){
 }
 
 /* ---------- wiring ---------- */
-$("start").onclick = function(){ i = 0; picks = []; render(); show("quiz"); };
+Array.prototype.forEach.call(document.querySelectorAll(".start-btn"), function(btn){
+  btn.onclick = function(){ i = 0; picks = []; render(); show("quiz"); };
+});
+(function(){
+  var d = nextWorkshop();
+  $("nextDate").textContent = d ? "Next: " + d + ", " + CONFIG.workshopTime : "New date coming soon";
+})();
 $("back").onclick  = function(){ if (i > 0) { i--; render(); } };
 $("retake").onclick= function(){ i = 0; picks = []; render(); show("quiz"); };
 
