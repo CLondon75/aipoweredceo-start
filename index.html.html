@@ -325,9 +325,12 @@ h1 .hl{color:var(--teal)}
    ===================================================================== */
 var CONFIG = {
   captureEndpoint: "https://formspree.io/f/mjyblwjr",
-  /* Add each month's free workshop here (YYYY-MM-DD). The quiz shows the
-     next one that hasn't happened yet, so a passed date drops off by itself. */
-  workshopDates: ["2026-11-21"],
+  /* One free workshop at a time. "show" is the day the date goes up on the
+     quiz (the day after the last workshop). Before that day it stays hidden. */
+  workshopDates: [
+    {date:"2026-11-21", show:"2026-10-01"},
+    {date:"2026-12-12", show:"2026-11-22"}
+  ],
   workshopTime: "9 to 10 AM ET",
   links: {
     workshop: "https://aipoweredceo-free-workshop.vercel.app/?from=quiz",
@@ -494,10 +497,11 @@ function whyLine(){
 
 function nextWorkshop(){
   var today = new Date(); today.setHours(0,0,0,0);
+  function day(x){ var p = x.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
   for (var k = 0; k < CONFIG.workshopDates.length; k++) {
-    var p = CONFIG.workshopDates[k].split("-");
-    var d = new Date(+p[0], +p[1]-1, +p[2]);
-    if (d >= today) return d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+    var w = CONFIG.workshopDates[k], d = day(w.date);
+    if (d >= today && day(w.show) <= today)
+      return d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
   }
   return null;
 }
